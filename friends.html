@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Reader - Ordered and Random Links</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #linkList {
+            list-style-type: none;
+            padding: 0;
+        }
+        #linkList li {
+            margin-bottom: 10px;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Friends</h1>
+    <div id="status"></div>
+    <ul id="linkList"></ul>
+
+    <script>
+        // Specify the path to your CSV file on the server
+        const csvFilePath = 'friends.csv';
+
+        // Function to load and process the CSV
+        function loadAndProcessCSV() {
+            const status = document.getElementById('status');
+            status.textContent = 'Loading CSV file...';
+
+            fetch(csvFilePath)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    status.textContent = 'Processing CSV data...';
+                    processCSV(data);
+                    status.textContent = '';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    status.innerHTML = `<span class="error">Error: ${error.message}. Please check the console for details.</span>`;
+                });
+        }
+
+        function processCSV(csv) {
+            const rows = csv.split('\n').map(row => row.trim().split(','));
+            if (rows.length < 2) {
+                throw new Error('CSV file is empty or has insufficient data');
+            }
+
+            const header = rows.shift(); // Remove header row
+            if (header.length < 3) {
+                throw new Error('CSV header is incomplete. Expected: Name, URL, Pin');
+            }
+
+            // Sort rows based on pin (column 3)
+            const sortedRows = rows.sort((a, b) => {
+                const pinA = parseInt(a[2]) || Infinity;
+                const pinB = parseInt(b[2]) || Infinity;
+                return pinA - pinB;
+            });
+
+            // Separate pinned and unpinned rows
+            const pinnedRows = sortedRows.filter(row => row.length > 2 && parseInt(row[2]));
+            const unpinnedRows = sortedRows.filter(row => row.length <= 2 || !parseInt(row[2]));
+
+            // Shuffle unpinned rows
+            for (let i = unpinnedRows.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [unpinnedRows[i], unpinnedRows[j]] = [unpinnedRows[j], unpinnedRows[i]];
+            }
+
+            // Combine pinned and unpinned rows
+            const finalRows = [...pinnedRows, ...unpinnedRows];
+
+            // Create and display links
+            const linkList = document.getElementById('linkList');
+            linkList.innerHTML = '';
+
+            finalRows.forEach(row => {
+                if (row.length < 2) return; // Skip incomplete rows
+                const [name, url] = row;
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = url;
+                a.textContent = name;
+                li.appendChild(a);
+                linkList.appendChild(li);
+            });
+        }
+
+        // Load and process the CSV when the page loads
+        window.addEventListener('load', loadAndProcessCSV);
+    </script>
+</body>
+</html>

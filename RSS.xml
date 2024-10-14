@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>Feed Title</title>
+        <link>link</link>
+        <description>Feed discription</description>
+        <item>
+            <title>Entry 1</title>
+            <link>link-to-entry-one</link>
+            <guid>link-to-entry-one</guid>
+            <pubDate>Date Of publish</pubDate>
+            <description>discription of Entry 1</description>
+        </item>
+    </channel>
+</rss>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>Feed Title</title>
+        <link>link</link>
+        <description>Feed discription</description>
+        <item>
+            <title>date</title>
+            <link>photo.html</link>
+            <guid>date</guid>
+            <pubDate>Date Of publish</pubDate>
+            <image>
+                <url>resource/pgoros/ex1.bmp</url>
+            </image>
+            <image>
+                <url>resource/pgoros/ex2.bmp</url>
+            </image>
+            <image>
+                <url>resource/pgoros/ex3.bmp</url>
+            </image>
+            <description>caption</description>
+        </item>
+    </channel>
+</rss>
