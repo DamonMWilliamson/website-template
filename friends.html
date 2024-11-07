@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSV Reader - Ordered and Random Links</title>
+    <title>Friends</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -30,10 +30,8 @@
     <ul id="linkList"></ul>
 
     <script>
-        // Specify the path to your CSV file on the server
-        const csvFilePath = '../friends.csv';
+        const csvFilePath = 'friends.csv';
 
-        // Function to load and process the CSV
         function loadAndProcessCSV() {
             const status = document.getElementById('status');
             status.textContent = 'Loading CSV file...';
@@ -52,20 +50,13 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    status.innerHTML = `<span class="error">Error: ${error.message}. Please check the console for details.</span>`;
+                    status.innerHTML = `<span class="error">Error: ${error.message}</span>`;
                 });
         }
 
         function processCSV(csv) {
             const rows = csv.split('\n').map(row => row.trim().split(','));
-            if (rows.length < 2) {
-                throw new Error('CSV file is empty or has insufficient data');
-            }
-
             const header = rows.shift(); // Remove header row
-            if (header.length < 3) {
-                throw new Error('CSV header is incomplete. Expected: Name, URL, Pin');
-            }
 
             // Sort rows based on pin (column 3)
             const sortedRows = rows.sort((a, b) => {
@@ -98,6 +89,8 @@
                 const a = document.createElement('a');
                 a.href = url;
                 a.textContent = name;
+                a.target = "_blank"; // This makes links open in new tabs
+                a.rel = "noopener noreferrer"; // Security best practice for target="_blank"
                 li.appendChild(a);
                 linkList.appendChild(li);
             });
