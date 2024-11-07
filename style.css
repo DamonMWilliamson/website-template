@@ -80,7 +80,7 @@
   }
 
   html, body{
-    background-image: url("resource/background.jpg");
+    background-image: url("../resource/background.jpg");
     background-color: black;
     color: white;
     background-repeat: repeat;
@@ -101,7 +101,43 @@ table,th,td{
 
 .friends{
   width: 250px;
-  height: 500px;
+  height: 485px;
+  position: absolute;
+  top: 72px; /* Same as topnav height */
+  background-color: rgb(156, 149, 218);
+  right: 10%;
 }
 
 
+#main-container {
+  position: absolute;
+  top: 67px; /* Same as topnav height */
+  left: 7%;
+  right: 7%;
+  bottom: 0;
+  background-color: rgb(156, 149, 218);
+}
+
+/* Update sidebar positioning */
+.sidebar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 200px;
+  background-color: rgb(173, 167, 226);
+  bottom: 0;
+}
+
+/* Update content positioning */
+.content {
+  position: absolute;
+  width: 65%;
+  left: 20%;
+  right: 0;
+  top: 0;
+  padding: 20px;
+
+  background-color: rgb(156, 149, 218);
+  color: #000000;
+}
+ 
