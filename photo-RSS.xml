@@ -6,7 +6,7 @@
         <description>Feed discription</description>
         <item>
             <title>date</title>
-            <link>photo.html</link>
+            <link>https://template.damonw.net/photo.html</link>
             <guid>date</guid>
             <pubDate>Date Of publish</pubDate>
             <image>
